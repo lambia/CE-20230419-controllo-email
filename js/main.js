@@ -1,25 +1,44 @@
-let mailAutorizzate = [ "luca@lambiase.it", "utente@asd.net", "giorgio@boolean.careers", "federico@gmail.com" ];
+let listaMailAutorizzate = [ "luca@lambiase.it", "utente@asd.net", "giorgio@boolean.careers", "federico@gmail.com" ];
+let accessoConsentito;
+let mailUtente;
+const msgOkElem = document.getElementById("messaggioOK");
+const msgKoElem = document.getElementById("messaggioKO");
+const btn = document.getElementById("loginButton");
 
-let mailUtente = prompt("Inserisci la tua email");
-console.log(`La mail inserita è ${mailUtente}`);
+btn.addEventListener("click", function() {
+    accessoConsentito = false;
+    console.log("Lista email autorizzate", listaMailAutorizzate);
+    mailUtente = document.getElementById("emailUtente").value;
+    console.log("Email inserita: ", mailUtente);
 
-let mailAutorizzata = false;
+    for (let c = 0; c < listaMailAutorizzate.length; c++) {
+        const mailDaConfrontare = listaMailAutorizzate[c];
+        
+        if(mailUtente == mailDaConfrontare) {
+            accessoConsentito = true;
+            // console.log("Trovata corrispondenza");
+        } /* else {
+            console.log("NON trovata corrispondenza");
+        }*/
+    }
 
-for (let c = 0; c < mailAutorizzate.length; c++) {
-    const mailDaConfrontare = mailAutorizzate[c];
-    
-    if(mailUtente == mailDaConfrontare) {
-        mailAutorizzata = true;
-        // console.log("Trovata corrispondenza");
-    } /* else {
-        console.log("NON trovata corrispondenza");
-    }*/
-}
+    console.log("Valore variabile di controllo: ", accessoConsentito);
 
-console.log("Valore variabile di controllo: ", mailAutorizzata);
+    if(accessoConsentito==true) {
+        console.log("Benvenuto utente autorizzato!");
+        // msgOkElem.style.display = "block";
+        // msgKoElem.style.display = "none";
 
-if(mailAutorizzata==true) {
-    console.log("Benvenuto utente autorizzato!");
-} else {
-    console.log("Torna a casa, oh utente malevolo");
-}
+        msgOkElem.classList.remove("hidden");
+        msgKoElem.classList.add("hidden");
+
+    } else {
+        console.log("Torna a casa, oh utente malevolo");
+        // msgOkElem.style.display = "none";
+        // msgKoElem.style.display = "block";
+
+        msgOkElem.classList.add("hidden");
+        msgKoElem.classList.remove("hidden");
+    }
+
+});
